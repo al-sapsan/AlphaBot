@@ -173,7 +173,7 @@ ansible-playbook site.yml --limit lab-serv
 
 ---
 
-## 👥 Авторы
+## 📝 Автор
 
 - **Инфраструктура и DevOps:** sapsan
 - **Робототехника и разработка:** sapsan
