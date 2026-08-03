@@ -1,189 +1,164 @@
-# Lab4Ros — Heterogeneous Robotics Laboratory
+# AlphaBot2-Pi — Архитектура (alpha-01)
 
-**Version:** 5.0  
-**Date:** July 2026  
-**Status:** Production Ready — Infrastructure | In Progress — Robots  
-
----
-
-## 🎯 About the Project
-
-Lab4Ros is a **reproducible, heterogeneous robotics laboratory** based on ROS 2 Jazzy, built according to the Infrastructure as Code principle. The laboratory includes server infrastructure, a development environment, a mobile terminal, an HMI node, and three robotic platforms.
-
-### Key Characteristics
-
-- **Infrastructure:** 92% industrial standard compliance  
-- **Devices:** 5 infrastructure units + 3 robots + IP camera  
-- **Repositories:** 6 active (+ planned for robots)  
-- **CI/CD:** GitHub Actions + Forgejo Actions  
-- **Monitoring:** Grafana + Loki + Telegraf + IP camera  
-- **Security:** UFW + Tailscale VPN + Ansible Vault + BorgBackup  
-- **Relevance Horizon:** until 2031–2032  
+**Версия:** 2.1
+**Дата:** 3 августа 2026
+**Основание:** Datasheet AlphaBot2-Pi + AlphaBot2-Base (Waveshare)
 
 ---
 
-## 🏗️ Architecture
+## 1. Платформа
 
-```mermaid
-flowchart TB
-    subgraph INFRA["Infrastructure"]
-        SRV["lab-serv (MBP 2012)\nInfrastructure Server\n11 Docker containers\n24/7"]
-        HOST["lab-host (MBP 2019)\nDevelopment Host\nAnsible Controller"]
-        DEV["lab-dev (VM)\nROS 2 Development"]
-        TERM["lab-term (MBP 2020)\nEngineering Workstation"]
-        TAB["lab-tab (Samsung A11)\nMobile HMI"]
-        CAM["IP camera\nPolygon Monitor"]
-    end
-
-    subgraph ROBOTS["Robots"]
-        ALPHA["alpha-bot-01\nAlphaBot2-Pi\nEmbedded + micro-ROS"]
-        MI["mi-robot-01\nXiaomi Mi Robot\nNav2 + SLAM + YOLO"]
-        HAWK["hawk-01\nHawk UAV\nMAVLink + ArUco"]
-    end
-
-    INFRA --- ROBOTS
-```
-
-### 🤖 Robotic Platforms
-
-| Robot | Compute Unit | ROS 2 | Specialization | Status |
-|-------|:---:|:-----:|---------------|:------:|
-| **AlphaBot2-Pi** | RPi 5 2GB | Jazzy (ros-base) | Embedded + micro-ROS + 22 sensors | 🔴 Assembly |
-| **Mi Robot** | RPi 5 8GB + NVMe 1TB | Jazzy (full) | Nav2 + SLAM + YOLO | ⬚ Procurement |
-| **Hawk** | RPi Zero 2 W | Jazzy + MAVROS | MAVLink + video + ArUco | ⬚ Procurement |
+| Параметр | Значение |
+|----------|----------|
+| **Шасси** | AlphaBot2-Pi (Waveshare), 2 этажа |
+| **Вычислитель** | Raspberry Pi 5, 2 GB RAM |
+| **Накопитель** | SanDisk Extreme Pro A2 256 GB MicroSD |
+| **ОС** | Ubuntu 24.04 Server (64-bit) |
+| **IP** | 192.168.0.50 |
+| **Hostname** | alpha-01 |
+| **ROS 2** | Jazzy (ros-base) |
+| **DDS** | CycloneDDS (Domain 42) |
+| **I2C** | Включён (`dtparam=i2c_arm=on`) |
 
 ---
 
-## 🛠️ Technology Stack
+## 2. Платы
 
-### Infrastructure
-
-| Category | Technologies |
-|-----------|------------|
-| **IaC** | Ansible (10 roles), Molecule, Ansible Vault |
-| **Containerization** | Docker Engine, Docker Compose (11 containers) |
-| **CI/CD** | GitHub Actions, Forgejo Actions, Pre-commit, Renovate |
-| **Monitoring** | Grafana, Loki, Promtail, Telegraf, InfluxDB |
-| **Backups** | BorgBackup (daily, 3-2-1 rule) |
-| **VPN** | Tailscale (primary), AmneziaWG (backup) |
-| **Configuration** | Chezmoi, Syncthing |
-| **Security** | UFW, SSH ED25519, Ansible Vault |
-| **Networking** | Wi‑Fi 5 GHz, CycloneDDS (ROS Domain 42) |
-
-### Robotics
-
-| Category | Technologies |
-|-----------|------------|
-| **Framework** | ROS 2 Jazzy Jalisco (LTS) |
-| **DDS** | CycloneDDS |
-| **Communication** | MQTT (Mosquitto), MAVLink (Hawk) |
-| **Computer Vision** | OpenCV, YOLO (Mi Robot), ArUco (Hawk) |
-| **Navigation** | Nav2, SLAM Toolbox |
-| **Microcontrollers** | micro-ROS, STM32F401, Pico W, ESP32 |
-| **Sensors** | LiDAR LDS, GPS M9N, IMU, encoders, 22 sensors (AlphaBot2) |
-| **Development Tools** | DevContainer (ARM64 cross-compilation), Foxglove Studio |
+| Плата | Расположение | Чипы | Функции |
+|-------|:------------:|------|---------|
+| **AlphaBot2-Base** | Нижняя | TB6612FNG, LM393, ST188 ×3, ITR20001/T ×5, WS2812B ×2 | Моторы, датчики, светодиоды, батарейный отсек |
+| **AlphaBot2-Pi** | Верхняя | PCA9685, TLC1543, CP2102, LM2596 | ШИМ-контроллер, АЦП, UART, стабилизатор, серво-разъём, джойстик, ИК-приёмник, зуммер |
+| **FC-20P шлейф** | Между платами | — | Соединение AlphaBot2-Base ↔ AlphaBot2-Pi |
 
 ---
 
-## 📊 Monitoring and Observability
+## 3. Микроконтроллеры и сенсоры
 
-- **Grafana:** Dashboards for system metrics, Docker containers, and network activity  
-- **Loki + Promtail:** Centralized logs (Docker, system, audit)  
-- **IP Camera:** Polygon snapshots every 10 seconds, 7‑day retention, external access via Tailscale  
-- **Telegraf:** Metrics collection for CPU, RAM, disks, Docker  
+### Основные (на платах)
 
----
+| Компонент | Назначение | Интерфейс | Плата |
+|-----------|------------|-----------|:-----:|
+| **PCA9685** | ШИМ-контроллер 16 каналов — моторы и сервоприводы | I2C (0x40) | AlphaBot2-Pi |
+| **TLC1543** | 10-бит АЦП для аналоговых датчиков | SPI | AlphaBot2-Pi |
+| **TB6612FNG** | Драйвер двух моторов N20 | PCA9685 → TB6612 | AlphaBot2-Base |
+| **LM393** | Сдвоенный компаратор — оцифровка сигнала ИК-датчиков | Аналоговый → GPIO | AlphaBot2-Base |
 
-## 🔒 Security
+### Датчики
 
-| Principle | Implementation |
-|---------|---------------|
-| Least Privilege | SSH access via 8×8 matrix |
-| Defence in Depth | UFW → SSH keys → Ansible Vault → BorgBackup |
-| Zero Trust WAN | Tailscale (primary) + AmneziaWG (backup) |
-| Network Segmentation | Functional IP groups, VLAN plan (2028+) |
-| Encryption | WireGuard (Tailscale), ChaCha20 (AmneziaWG), HTTPS |
+| Компонент | Назначение | Интерфейс | Плата |
+|-----------|------------|-----------|:-----:|
+| **ITR20001/T** ×5 | ИК-датчики линии (отражение от поверхности) | GPIO (после LM393) | AlphaBot2-Base (низ) |
+| **ST188** ×3 | ИК-датчики препятствий | GPIO (после LM393) | AlphaBot2-Base |
+| **HC-SR04** | Ультразвуковой датчик расстояния (2–400 см) | GPIO (Trig + Echo) | Разъём на AlphaBot2-Base |
+| **Потенциометр** | Регулировка порога чувствительности датчиков препятствий | Аппаратный | AlphaBot2-Base |
 
----
+### Внешние (отдельные платы, план)
 
-## 📁 Repositories
-
-| Repository | Contents | Status |
-|-------------|------------|:------:|
-| `lab-infra` | Ansible IaC, Docker Compose, CI/CD | ✅ |
-| `dotfiles` | Configurations (Chezmoi) | ✅ |
-| `lab-dev-config` | ROS 2 source code | ✅ |
-| `alpha-bot-ros2` | AlphaBot2-Pi ROS 2 packages | ⬚ Planned |
-| `mi-robot-ros2` | Mi Robot ROS 2 packages | ⬚ Planned |
-| `hawk-ros2` | Hawk ROS 2 + MAVROS | ⬚ Planned |
+| Компонент | Назначение | Интерфейс |
+|-----------|------------|-----------|
+| **STM32F401CCU6** | Энкодеры, micro-ROS | Serial USB |
+| **Raspberry Pi Pico W** | Дополнительные датчики | Serial USB |
 
 ---
 
-## 🚀 Quick Start
+## 4. Исполнительные устройства
 
-### Deploy Infrastructure from Scratch
-
-```bash
-git clone https://github.com/al-sapsan/lab-infra.git
-cd lab-infra
-bash bootstrap.sh
-ansible-playbook site.yml
-```
-
-### Apply Changes
-
-```bash
-cd ~/lab-infra
-git pull origin main
-make check
-ansible-playbook site.yml --limit lab-serv
-```
+| Устройство | Модель | Характеристики | Управление | Плата |
+|------------|--------|----------------|------------|:-----:|
+| Моторы N20 ×2 | N20 Micro Gear Motor | 6V, 600 RPM, редуктор 1:30 | PCA9685 → TB6612FNG | AlphaBot2-Base |
+| Сервопривод | MG90 | Позиционный, 180° | PCA9685 | Разъём на AlphaBot2-Pi |
+| Servo interface | Разъём для сервоприводов | Pan-Tilt + доп. серво | PCA9685 | AlphaBot2-Pi |
+| Колёса | Резина | Диаметр 42 мм, ширина 19 мм | Механика | AlphaBot2-Base |
+| Omni-wheel | Рояльное колесо | Переднее, поворотное | Механика | AlphaBot2-Base |
 
 ---
 
-## 📈 Roadmap
+## 5. Ввод и управление
 
-### Phase 0: Preparation (July–August 2026) — 90% Complete
-
-- [x] Infrastructure as Code (Ansible, 10 roles)  
-- [x] CI/CD (GitHub Actions + Forgejo Actions)  
-- [x] Monitoring (Grafana + Loki + IP camera)  
-- [x] Disaster Recovery (BorgBackup)  
-- [x] IP segmentation (lab + IoT + guests)  
-- [ ] Robot hardware procurement  
-
-### Phase 1: AlphaBot2‑Pi (August–September 2026)
-
-- [ ] Chassis assembly  
-- [ ] RPi 5 2GB + Ubuntu 24.04 + ROS 2 Jazzy  
-- [ ] Motor driver (PCA9685) + sensors  
-- [ ] STM32F401 + micro-ROS  
-- [ ] Keyboard teleoperation  
-
-### Phase 2: Hawk + Mi Robot (September–November 2026)
-
-- [ ] Hawk: frame assembly, Pixhawk firmware, MAVROS, video streaming  
-- [ ] Mi Robot: GD32 reverse engineering, RPi 5, Nav2, YOLO  
-
-### Phase 3: Integration (2027)
-
-- [ ] Distributed ROS 2 (3 DDS nodes)  
-- [ ] Multi-robot coordination  
-- [ ] Fleet Management (Ansible)  
+| Устройство | Назначение | Интерфейс | Плата |
+|------------|------------|-----------|:-----:|
+| **Joystick** | Ручное управление роботом | GPIO / АЦП (TLC1543) | AlphaBot2-Pi |
+| **IR receiver** | Приём команд с ИК-пульта | GPIO | AlphaBot2-Pi |
+| **CP2102** | USB-UART мост для отладки | USB | AlphaBot2-Pi |
+| USB TO UART | Управление Pi через UART | UART | AlphaBot2-Pi |
 
 ---
 
-## 📝 Author
+## 6. Индикация
 
-- **Infrastructure and DevOps:** sapsan  
-- **Robotics and Development:** sapsan  
-
----
-
-## 📄 License
-
-MIT License  
+| Компонент | Назначение | Управление | Плата |
+|-----------|------------|------------|:-----:|
+| **WS2812B** ×2 | Адресные RGB-светодиоды | GPIO (bit-bang) | AlphaBot2-Base |
+| **Buzzer** | Пассивный зуммер — звуковая сигнализация | GPIO | AlphaBot2-Pi |
+| Obstacle avoiding indicators | Загораются при обнаружении препятствия | Аппаратно (LM393) | AlphaBot2-Base |
+| Power indicator | Светодиод питания | Аппаратно | AlphaBot2-Base |
 
 ---
 
-> **Lab4Ros v5.0** — from infrastructure to robots. Reproducible, secure, scalable.
+## 7. Питание
+
+| Компонент | Характеристики | Применение | Плата |
+|-----------|:---:|------------|:-----:|
+| **Li-ion 14500** ×2 | 3.7V каждая → 7.4V | Автономная езда | AlphaBot2-Base |
+| **LM2596** | Стабилизатор 5V (7.4V → 5V) | Питание RPi 5 и плат | AlphaBot2-Pi |
+| **Power Bank Mi 165W** | 5V/3A Type-C | Разработка и отладка | RPi 5 |
+| **Power switch** | Выключатель питания | Вкл/выкл | AlphaBot2-Base |
+
+---
+
+## 8. Интерфейсы связи
+
+| Интерфейс | Устройства | Протокол |
+|-----------|------------|----------|
+| **I2C** | PCA9685 (0x40) | I2C |
+| **SPI** | TLC1543 | SPI |
+| **GPIO** | ITR20001/T ×5, ST188 ×3, HC-SR04, WS2812B ×2, Joystick, IR receiver, Buzzer | GPIO |
+| **USB-UART** | CP2102 | UART |
+| **FC-20P шлейф** | Соединение AlphaBot2-Base ↔ AlphaBot2-Pi | GPIO |
+| **40-pin GPIO** | RPi 5 ↔ AlphaBot2-Pi | — |
+| **Serial USB** | STM32F401, Pico W (план) | USB |
+
+---
+
+## 9. ROS 2: плановые ноды и топики
+
+| Нода | Публикация | Подписка | Тип сообщения |
+|------|:---:|:---:|---------------|
+| `motor_driver` | `/alpha_bot/odometry` | `/cmd_vel` | `geometry_msgs/Twist` |
+| `line_sensors` | `/alpha_bot/line_sensors` | — | `std_msgs/Int32MultiArray` |
+| `range_sensor` | `/alpha_bot/range` | — | `sensor_msgs/Range` |
+| `obstacle_sensors` | `/alpha_bot/obstacles` | — | `std_msgs/Int32MultiArray` |
+| `led_controller` | — | `/alpha_bot/leds` | `std_msgs/ColorRGBA` |
+| `buzzer` | — | `/alpha_bot/buzzer` | `std_msgs/Bool` |
+| `joystick` | `/alpha_bot/joystick` | — | `sensor_msgs/Joy` |
+| `ir_receiver` | `/alpha_bot/ir_command` | — | `std_msgs/Int32` |
+
+---
+
+## 10. Полный список компонентов
+
+| # | Компонент | Тип | Интерфейс | Плата | Статус |
+|:--:|-----------|------|-----------|:-----:|:------:|
+| 1 | PCA9685 | ШИМ-контроллер | I2C (0x40) | Pi | ⬚ |
+| 2 | TLC1543 | АЦП | SPI | Pi | ⬚ |
+| 3 | TB6612FNG | Драйвер моторов | PCA9685 | Base | ⬚ |
+| 4 | LM393 | Компаратор | Аналоговый | Base | ⬚ |
+| 5 | ITR20001/T ×5 | Датчики линии | GPIO | Base | ⬚ |
+| 6 | ST188 ×3 | Датчики препятствий | GPIO | Base | ⬚ |
+| 7 | HC-SR04 | Ультразвуковой дальномер | GPIO | Base | ⬚ |
+| 8 | WS2812B ×2 | RGB-светодиоды | GPIO | Base | ⬚ |
+| 9 | Потенциометр | Порог препятствий | Аппаратный | Base | ⬚ |
+| 10 | N20 ×2 | Моторы | TB6612FNG | Base | ⬚ |
+| 11 | Omni-wheel | Колесо | Механика | Base | ✅ |
+| 12 | Servo interface | Разъём серво | PCA9685 | Pi | ⬚ |
+| 13 | Joystick | Ручное управление | GPIO/АЦП | Pi | ⬚ |
+| 14 | IR receiver | ИК-приёмник | GPIO | Pi | ⬚ |
+| 15 | Buzzer | Зуммер | GPIO | Pi | ⬚ |
+| 16 | CP2102 | USB-UART | USB | Pi | ⬚ |
+| 17 | LM2596 | Стабилизатор 5V | Питание | Pi | ✅ |
+| 18 | Power switch | Выключатель | — | Base | ✅ |
+| 19 | Battery holder 14500 ×2 | Батарейный отсек | — | Base | ✅ |
+| 20 | STM32F401CCU6 | Энкодеры, micro-ROS | Serial USB | Внешняя | ⬚ |
+| 21 | Pico W | Датчики | Serial USB | Внешняя | ⬚ |
+| 22 | Obstacle indicators | Светодиоды препятствий | Аппаратно | Base | ✅ |
+| 23 | Power indicator | Светодиод питания | Аппаратно | Base | ✅ |
