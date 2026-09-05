@@ -17,8 +17,6 @@
 | **Computing Unit** | Raspberry Pi 5, 2 GB RAM |
 | **Storage** | SanDisk Extreme Pro A2 256 GB MicroSD |
 | **OS** | Ubuntu 24.04 Server (64-bit) |
-| **IP** | 192.168.0.50 |
-| **Hostname** | alpha-01 |
 | **ROS 2** | Jazzy (ros-base) |
 | **DDS** | CycloneDDS (Domain 42) |
 | **I2C** | Enabled (`dtparam=i2c_arm=on`) |
