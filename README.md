@@ -23,7 +23,7 @@
 | **DDS** | CycloneDDS (Domain 42) |
 | **I2C** | Enabled (`dtparam=i2c_arm=on`) |
 
-## 🚀 Features
+### 🚀 Features
 
 - Motor control via PCA9685 → TB6612FNG
 - Reading 5 line sensors (following the line)
