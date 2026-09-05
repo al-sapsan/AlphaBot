@@ -2,7 +2,10 @@
 
 **Version:** 2.1  
 **Date:** August 3, 2026  
-**Basis:** Datasheet AlphaBot2-Pi + AlphaBot2-Base (Waveshare)  
+**Basis:** AlphaBot2-Pi + AlphaBot2-Base (Waveshare)  
+
+
+**⚖️ License:** MIT | ⚙️ **ROS2:** Jazzy | 🍓 **Platform:** Raspberry Pi 5
 
 ---
 
@@ -20,6 +23,16 @@
 | **DDS** | CycloneDDS (Domain 42) |
 | **I2C** | Enabled (`dtparam=i2c_arm=on`) |
 
+## 🚀 Features
+
+- Motor control via PCA9685 → TB6612FNG
+- Reading 5 line sensors (following the line)
+- Read 3 obstacle sensors
+- HC-SR04 Ultrasonic range finder
+- RGB LEDs WS2812B
+- Buzzer, IR receiver, joystick
+- Publishing data in ROS 2 topics
+
 ---
 
 ## 2. Boards
@@ -29,6 +42,12 @@
 | **AlphaBot2-Base** | Lower tier | TB6612FNG, LM393, ST188 ×3, ITR20001/T ×5, WS2812B ×2 | Motors, sensors, LEDs, battery compartment |
 | **AlphaBot2-Pi** | Upper tier | PCA9685, TLC1543, CP2102, LM2596 | PWM controller, ADC, UART, voltage regulator, servo connector, joystick, IR receiver, buzzer |
 | **FC-20P cable** | Between boards | — | Connection AlphaBot2-Base ↔ AlphaBot2-Pi |
+
+> 👉 <span style="color:deepskyblue; font-size: 20px">Links:</span>
+
+> Details for **AlphaBot2-Base** see [here](https://www.waveshare.com/wiki/AlphaBot2-Pi#AlphaBot2-Base)
+> 
+> Details for **AlphaBot2-Pi** see [here](https://www.waveshare.com/wiki/AlphaBot2-Pi#AlphaBot2-Pi)
 
 ---
 
