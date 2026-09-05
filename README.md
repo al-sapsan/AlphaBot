@@ -1,7 +1,7 @@
 # AlphaBot2-Pi — Architecture (alpha-01)
 
 **Version:** 2.1  
-**Date:** August 3, 2026  
+**Date:** September 3, 2026  
 **Basis:** AlphaBot2-Pi + AlphaBot2-Base (Waveshare)  
 
 
