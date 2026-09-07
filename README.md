@@ -112,14 +112,15 @@
 
 ---
 
-## 7. Power Supply
+## 7. Power Supply 
 
-| Component | Specifications | Application | Board |
-|-----------|:---------------:|-------------|:-----:|
-| **Li-ion 14500** ×2 | 3.7V each → 7.4V total | Autonomous operation | AlphaBot2-Base |
-| **LM2596** | 5V voltage regulator (7.4V → 5V) | Powering RPi 5 and boards | AlphaBot2-Pi |
-| **Power Bank Mi 165W** | 5V/3A Type-C | Development and debugging | RPi 5 |
-| **Power Switch** | Power on/off switch | Enable/disable power | AlphaBot2-Base |
+| Component | Power Source | Voltage | Current |
+|-----------|:----------------:|:----------:|:---:|
+| **RPi 5** | Li-Po 3S → UBEC | 5V | up to 5A |
+| **N20 motors ×2** | 14500 ×2 → LM2596 | 5V | up to 3A |
+| **Sensors** | 14500 ×2 → LM2596 | 5V | < 0.5A |
+| **PCA9685** | 14500 ×2 → LM2596 | 5V | < 0.3A |
+
 
 ---
 
