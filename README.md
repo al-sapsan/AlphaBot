@@ -112,7 +112,7 @@
 
 ---
 
-## 7. Power Supply 
+## 7. Power Supply
 
 | Component | Power Source | Voltage | Current |
 |-----------|:----------------:|:----------:|:---:|
@@ -121,6 +121,8 @@
 | **Sensors** | 14500 ×2 → LM2596 | 5V | < 0.5A |
 | **PCA9685** | 14500 ×2 → LM2596 | 5V | < 0.3A |
 
+> 📌 <span style="color:red; font-size: 20px">Note:</span>
+> [see here in details](https://github.com/al-sapsan/AlphaBot/blob/main/docs/power-supply.md)
 
 ---
 
