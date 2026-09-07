@@ -46,6 +46,8 @@
 > Details for **AlphaBot2-Base** see [here](https://www.waveshare.com/wiki/AlphaBot2-Pi#AlphaBot2-Base)
 > 
 > Details for **AlphaBot2-Pi** see [here](https://www.waveshare.com/wiki/AlphaBot2-Pi#AlphaBot2-Pi)
+>
+> Details for **Hardware Assembly and Testing** see [here](https://github.com/al-sapsan/AlphaBot/blob/main/docs/boards-assembly.md)
 
 ---
 
