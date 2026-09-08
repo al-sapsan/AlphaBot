@@ -1,4 +1,4 @@
-# AlphaBot2-Pi — Architecture (alpha-01)
+# Project AlphaBot2-Pi (alpha-01)
 
 **Version:** 2.1  
 **Date:** September 3, 2026  
@@ -8,6 +8,8 @@
 **⚖️ License:** MIT | ⚙️ **ROS2:** Jazzy | 🍓 **Platform:** Raspberry Pi 5
 
 ---
+> 👉 <span style="color:deepskyblue; font-size: 20px">Links:</span>
+> The history of this project see [here](https://www.waveshare.com/wiki/AlphaBot2-Pi#AlphaBot2-Base)
 
 ## 1. Platform
 
