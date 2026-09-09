@@ -9,7 +9,7 @@
 
 ---
 > 👉 <span style="color:deepskyblue; font-size: 20px">Links:</span>
-> The history of changes and improvements in the project see [here](https://www.waveshare.com/wiki/AlphaBot2-Pi#AlphaBot2-Base)
+> The history of changes and improvements in the project see [here](https://github.com/al-sapsan/AlphaBot/blob/main/docs/project-history.md)
 
 ## 1. Platform
 
