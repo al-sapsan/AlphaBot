@@ -27,6 +27,11 @@
 | **AlphaBot2-Pi** | Top | PCA9685, TLC1543, CP2102, LM2596 | Servo controller, ADC, UART, regulator, joystick, IR receiver, buzzer |
 | **FC-20P cable** | Between boards | — | AlphaBot2-Base ↔ AlphaBot2-Pi connection |
 
+> 👉 <span style="color:deepskyblue; font-size: 20px">Links:</span>
+
+> Details for **Waveshare's AlphaBot2-Base** see [here](https://www.waveshare.com/wiki/AlphaBot2-Pi#AlphaBot2-Base)
+> 
+> Details for **Waveshare's AlphaBot2-Pi** see [here](https://www.waveshare.com/wiki/AlphaBot2-Pi#AlphaBot2-Pi)
 ---
 
 # Foto 
