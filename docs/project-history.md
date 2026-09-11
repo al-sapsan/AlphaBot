@@ -9,7 +9,7 @@
 | Parameter | Value |
 |----------|----------|
 | **Chassis** | AlphaBot2-Pi (Waveshare), 2 decks |
-| **Compute** | Raspberry Pi 5, 2 GB RAM |
+| **Compute** | Raspberry Pi 5, 2 GB RAM ‼️|
 | **Storage** | SanDisk Extreme Pro A2 256 GB MicroSD |
 | **OS** | Ubuntu 24.04 Server (64-bit) |
 | **ROS 2** | Jazzy (ros-base) |
