@@ -1,4 +1,4 @@
-# Project AlphaBot2-Pi (alpha-01)
+# Project AlphaBot2-Pi
 
 **Version:** 2.1  
 **Date:** September 3, 2026  
@@ -18,9 +18,8 @@
 | **Chassis** | AlphaBot2-Pi (Waveshare), 2-tier |
 | **Computing Unit** | Raspberry Pi 5, 2 GB RAM |
 | **Storage** | SanDisk Extreme Pro A2 256 GB MicroSD |
-| **OS** | Ubuntu 24.04 Server (64-bit) |
 | **ROS 2** | Jazzy (ros-base) |
-| **DDS** | CycloneDDS (Domain 42) |
+| **DDS** | CycloneDDS |
 | **I2C** | Enabled (`dtparam=i2c_arm=on`) |
 
 ### 🚀 Features
@@ -158,31 +157,3 @@
 | `ir_receiver` | `/alpha_bot/ir_command` | — | `std_msgs/Int32` |
 
 ---
-
-## 10. Full List of Components
-
-| # | Component | Type | Interface | Board | Status |
-|:--:|:-----------|:------:|:---------:|:-----:|:------:|
-| 1 | PCA9685 | PWM Controller | I2C (0x40) | Pi | ⬚ |
-| 2 | TLC1543 | ADC | SPI | Pi | ⬚ |
-| 3 | TB6612FNG | Motor Driver | PCA9685 | Base | ⬚ |
-| 4 | LM393 | Comparator | Analog | Base | ⬚ |
-| 5 | ITR20001/T ×5 | Line Sensors | GPIO | Base | ⬚ |
-| 6 | ST188 ×3 | Obstacle Sensors | GPIO | Base | ⬚ |
-| 7 | HC-SR04 | Ultrasonic Rangefinder | GPIO | Base | ⬚ |
-| 8 | WS2812B ×2 | RGB LEDs | GPIO | Base | ⬚ |
-| 9 | Potentiometer | Obstacle Threshold | Hardware | Base | ⬚ |
-| 10 | N20 ×2 | Motors | TB6612FNG | Base | ⬚ |
-| 11 | Omni-wheel | Wheel | Mechanical | Base | ✅ |
-| 12 | Servo Interface | Servo Connector | PCA9685 | Pi | ⬚ |
-| 13 | Joystick | Manual Control | GPIO/ADC | Pi | ⬚ |
-| 14 | IR Receiver | IR Receiver | GPIO | Pi | ⬚ |
-| 15 | Buzzer | Buzzer | GPIO | Pi | ⬚ |
-| 16 | CP2102 | USB-UART | USB | Pi | ⬚ |
-| 17 | LM2596 | 5V Regulator | Power | Pi | ✅ |
-| 18 | Power Switch | Power Switch | — | Base | ✅ |
-| 19 | Battery Holder 14500 ×2 | Battery Compartment | — | Base | ✅ |
-| 20 | STM32F401CCU6 | Encoders, micro-ROS | Serial USB | External | ⬚ |
-| 21 | Pico W | Sensors | Serial USB | External | ⬚ |
-| 22 | Obstacle Indicators | Obstacle LEDs | Hardware | Base | ✅ |
-| 23 | Power Indicator | Power LED | Hardware | Base | ✅ |
