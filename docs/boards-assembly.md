@@ -5,7 +5,6 @@
 | Component | Status |
 |-----------|:------:|
 | RPi 5 2GB + cooling | ✅ Installed on AlphaBot2-Pi |
-| Ubuntu 24.04 Server | ✅ Configured |
 | ROS 2 Jazzy | ✅ Installed |
 | GPIO extender | ✅ Arrived |
 | Alpha-Base + Alpha-Pi boards | ✅ Ready (to be connected) |
@@ -18,12 +17,12 @@
 ### 1.1 Verify Physical State
 
 ```bash
-# On alpha-01:
-ssh rosdev@192.168.0.50
+# On AlphaBot2-Pi:
+ssh name@192.168.0.XX
 
 # Verify RPi 5 is running:
 hostname
-# alpha-01
+# AlphaBot2-Pi
 
 # Check temperature:
 temp
@@ -66,7 +65,7 @@ sudo apt install -y i2c-tools gpiod python3-smbus python3-rpi.gpio
 
 ```bash
 # Power on RPi 5
-ssh rosdev@192.168.0.50
+ssh name@192.168.0.XX
 
 # Verify I²C detects PCA9685:
 sudo i2cdetect -y 1
