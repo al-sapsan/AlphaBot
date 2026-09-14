@@ -2,7 +2,7 @@
 
 **Version:** 1.0  
 **Date:** 2026-09-07  
-**Project:** Lab4Ros — AlphaBot2-Pi (alpha-01)  
+**Project:** Lab4Ros — AlphaBot2-Pi
 **Status:** Approved
 
 ---
@@ -209,21 +209,7 @@ Raspberry Pi 5
 
 ---
 
-## 8. Pre-Power-On Checklist
-
-- [ ] XT60 female soldered to UBEC input (correct polarity)
-- [ ] USB-C soldered to UBEC output (correct polarity)
-- [ ] Heat shrink applied to all connections
-- [ ] UBEC selector switch set to 5V
-- [ ] Multimeter reads 5.0V ±0.2V on USB-C
-- [ ] Li-Po charged (11.1–12.6V)
-- [ ] Stock 14500 batteries installed in Alpha-Base compartment
-- [ ] RPi 5 connected via USB-C from UBEC
-- [ ] Motors connected to Alpha-Base
-
----
-
-## 9. Final Configuration
+## 8. Final Configuration
 
 | Component | Power Source | Voltage | Current |
 |-----------|:----------------:|:----------:|:---:|
@@ -231,4 +217,4 @@ Raspberry Pi 5
 | **N20 motors ×2** | 14500 ×2 → LM2596 | 5V | up to 3A |
 | **Sensors** | 14500 ×2 → LM2596 | 5V | < 0.5A |
 | **PCA9685** | 14500 ×2 → LM2596 | 5V | < 0.3A |
-```
+
