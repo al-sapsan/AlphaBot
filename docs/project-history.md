@@ -161,7 +161,7 @@ flowchart LR
     end
     note1["⚠ Warning: risk of reverse current with this connection!"]
     note1 -.-> RPI
-    style RPI fill:#fa4,stroke:#333,stroke-width:2px
+    style RPI fill:#fa4,stroke:#ff3,stroke-width:2px, color:#fff
     style note1 fill:#ff6b6b,stroke:#c92a2a,stroke-width:3px,color:#fff
     linkStyle default stroke:#333,stroke-width:2px
     linkStyle 3 stroke:#c92a2a,stroke-width:2px,stroke-dasharray: 5 5
