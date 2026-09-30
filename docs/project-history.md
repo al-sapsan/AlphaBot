@@ -110,7 +110,7 @@ After all these adjustments, the AlphaBot looked a bit… melancholy, but it hel
 
 ## Step 3.1 — Testing
 
-Well, finally, the time for testing has come [see here](AlphaBot/docs/boards-assembly.md). After running all the tests and seeing that the system was fully functional, I hit a pretty significant problem for me: I could only test for 20–25 minutes at most. Even with the mildest, unloaded testing, the charge of the two 14500 batteries would catastrophically run out.
+Well, finally, the time for testing has come [see here](https://github.com/al-sapsan/AlphaBot/blob/main/docs/boards-assembly.md). After running all the tests and seeing that the system was fully functional, I hit a pretty significant problem for me: I could only test for 20–25 minutes at most. Even with the mildest, unloaded testing, the charge of the two 14500 batteries would catastrophically run out.
 
 The reason was that the AlphaBot2‑Pi board was originally designed by the manufacturer to be used with the third or, at most, fourth model of Raspberry Pi — which are much more energy‑efficient than the fifth model. And this is even considering the fact that only the single‑board computer was being tested, while the chassis remained motionless and practically unloaded on the test bench. If you were to make this contraption actually move — i.e., do what it’s actually meant to do — the battery would last a maximum of 10 minutes. As they say in Russia: «Such hockey we don’t need!»
 
@@ -134,9 +134,9 @@ flowchart TD
     end
 ```
 
-But problems arose here too. On the 40‑pin connector of the Raspberry Pi (RPi11 on AlphaBot2‑Pi), **pins 2 and 4** are **+5V lines**. In the standard AlphaBot2‑Pi circuit, they were used to **supply power to the RPi** from the LM2596 (via the FC‑20P ribbon cable from the lower board) [[AlphaBot2‑Pi‑Schematic.pdf]].
+But problems arose here too. On the 40‑pin connector of the Raspberry Pi (RPi11 on AlphaBot2‑Pi), **pins 2 and 4** are **+5V lines**. In the standard AlphaBot2‑Pi circuit, they were used to **supply power to the RPi** from the LM2596 (via the FC‑20P ribbon cable from the lower board) [see Waveshare's scheme for details](https://github.com/al-sapsan/AlphaBot/blob/main/docs/datasheets/AlphaBot2-Base-Schematic.pdf).
 
-[pins_to_remove.png]
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/pins_to_remove.png" alt="Pins to remove" style="width: 100%; height: auto;">
 
 #### Figure 3.1. Pins 2 and 4 used to **supply power to RPi**.
 > The blue-red crosses mark pins 2 and 4 that will need to be removed. Why? Read on 👇
@@ -145,11 +145,11 @@ But problems arose here too. On the 40‑pin connector of the Raspberry Pi (RPi1
 
 ### Issue 1: Conflict of two power sources
 
-After installing XH‑M404 (USB‑C → RPi 5), the RPi 5 receives power **directly via USB‑C**. If pins 2 and 4 were still connected to the LM2596, there would be a **reverse current**‼️ between the two 5V sources:
+After installing UBEC (USB‑C → RPi 5), the RPi 5 receives power **directly via USB‑C**. If pins 2 and 4 were still connected to the LM2596, there would be a **reverse current‼️** between the two 5V sources:
 
 ```mermaid
 flowchart LR
-    XH["XH‑M404 (5.1 V)"] -->|Power| UC["USB‑C"]
+    XH["ZTE UBEC (5 V)"] -->|Power| UC["USB‑C"]
     UC -->|Power feed| RPI["RPi 5"]
     LM["LM2596 (5.0 V)"] -->|To GPIO pins 2, 4| RPI
     subgraph PowerPath["Power Paths"]
@@ -187,12 +187,15 @@ Pins 2 and 4 on the 40‑pin connector are rated for **a current of up to 1A** (
 
 The Raspberry Pi Foundation **doesn’t recommend** powering the RPi 5 via GPIO at high currents. The official way is **USB‑C** (5V/5A, 27W).
 
+### Solution:
+Disconnect (remove) pins 2 and 4 to prevent reverse current damage to the RPi 5 power circuitry. Use power via USB‑C.
+
 ## Step 3.2 — Removing the pins
 
 **Physically:** pins 2 and 4 were removed by literally yanking them out 😀 from the RPi11 connector (40‑pin GPIO).
 **Result:** the RPi 5 no longer receives power from the LM2596 via GPIO. Power comes only via USB‑C from the XH‑M404.
 
-[after_removing.png]
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/after_removing.png" alt="dental surgery" style="width: 100%; height: auto;">
 
 #### Figure 3.2. GPIO extender after dental surgery.
 > The blue-red arrows indicate the sites of dental surgical procedures to remove pins 2 and 4 🦷
@@ -201,9 +204,9 @@ The Raspberry Pi Foundation **doesn’t recommend** powering the RPi 5 via GPIO 
 
 ## Step 3.3 — Soldering the circuit
 
-The decision was made — we’re going to do it. We did it…
+I’ve made the decision — I’m going to do it. Done.
 
-[chip_in_vice.jpeg]
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/chip_in_vice.jpeg" alt="Pins to remove" style="width: 100%; height: auto;">
 
 #### Figure 3.3. Soldered TX60F to ZTE UBEC.
 > The corresponding interface connectors were soldered to the voltage converter — now I’ve got to test this whole mess.
@@ -212,17 +215,19 @@ The decision was made — we’re going to do it. We did it…
 
 And as usual, testing was carried out afterwards.
 
-[UBEC_current.jpeg]
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/UBEC_current.jpeg" alt="UBEC_current" style="width: 100%; height: auto;">
+
 
 #### Figure 3.4. Output voltage readings from ZTE UBEC.
 > Here we go again! Of course, I could try to fix all this with a resistor or a Schottky diode 🤔. But somehow I’m not feeling up to it…
 
 ---
 
-And what do we see? The UBEC in use was outputting 5.261 V, which didn’t suit me at all, because:
+And what do we see? The UBEC in use was outputting **5.261 V**, which didn’t suit me at all, because:
 
-1. The Raspberry Pi 5 Product Brief (document with code RP‑008348‑DS) specifies the basic requirement as «5V/5A DC power via USB‑C, with Power Delivery support» [[RP‑008348‑DS‑6‑raspberry‑pi‑5‑product‑brief.pdf]].
-2. The Raspberry Pi Compute Module 5 clearly indicates the acceptable voltage range for the main power supply (in the electrical characteristics table, lines 77/83/85/86) as «4.75 V to 5.25 V; main power input» [[RP‑008180‑DS‑7‑cm5‑datasheet.pdf]].
+1. The Raspberry Pi 5 Product Brief (document with code RP‑008348‑DS) specifies the basic requirement as «5V/5A DC power via USB‑C, with Power Delivery support» [see here](https://github.com/al-sapsan/AlphaBot/blob/main/docs/datasheets/RP-008348-DS-6-raspberry-pi-5-product-brief.pdf).
+2. The Raspberry Pi Compute Module 5 clearly indicates the acceptable voltage range for the main power supply (in the electrical characteristics table, lines 77/83/85/86) as «4.75 V to 5.25 V; main power input» [see here](https://github.com/al-sapsan/AlphaBot/blob/main/docs/datasheets/RP-008180-DS-7-cm5-datasheet.pdf).
+
 3. The official «Raspberry Pi computer hardware» documentation (Power supply section) confirms that booting requires a source capable of delivering a stable 3 A at +5 V (15 W), and for full performance and removing peripheral limitations, you need a 5 A source at +5 V (25–27 W) [see here](https://www.raspberrypi.com/documentation/computers/raspberry-pi.html).
 
 Thus, when designing your own power circuits for the Raspberry Pi 5, you need to ensure a stable voltage in the range of 4.75 V to 5.25 V, with the power source capable of delivering up to 5 A without dropping below the minimum threshold.
@@ -241,7 +246,8 @@ The XH‑M404 4016E also had a significant plus — a digital voltmeter — but 
 
 After installing all this electrical mess, the AlphaBot logically transformed into the AlphaBattCarrier.
 
-[alpha collage]
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/alpha_v3_1.png" alt="Alpha v3 front" style="width: 100%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/alpha_v3_2.png" alt="Alpha v3 back" style="width: 100%; height: auto;">
 
 #### Figure 3.5. Monumental construction 😂
 > I’ve got a feeling this won’t be the last modification to the design. Do you feel the same?
