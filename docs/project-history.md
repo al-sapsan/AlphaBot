@@ -50,7 +50,7 @@
 
 According to the Raspberry Pi 5 docs, running it without cooling is a no‑go — so I got a case with two fans.
 
-<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/RasberryPi5.jpeg" alt="Initial platform2" style="width: 55%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/RasberryPi5.jpeg" alt="RasberryPi5" style="width: 55%; height: auto;">
 
 #### **Figure 2.1** Raspberry Pi 5 in its case.
 
@@ -81,7 +81,7 @@ I fixed the problem with a straightforward solution: a GPIO pin extender. But, o
 
 “Well, now it’s definitely going to work!” — I thought to myself. But the pie just wouldn’t fold. The GPIO extender, together with the Raspberry Pi case, increased the overall height of the top‑plate assembly. As a result, there was now a noticeable gap between the plate and the PCB standoffs.
 
-<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/Cannot_fold_pie.png" alt="Can connect GPIO" style="width: 75%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/Cannot_fold_pie.png" alt="Cannot_fold_pie" style="width: 75%; height: auto;">
 
 ### **Figure 6.** Increased stack height causing misalignment with standoffs.
 >The addition of the GPIO header extender and the Raspberry Pi 5 case increased the overall height of the upper assembly. This resulted in a gap between the top plate and the standoffs, preventing proper mechanical alignment.
@@ -94,7 +94,7 @@ It then became clear that the design needed to be modified: I had to lengthen th
 
 After all these adjustments, the AlphaBot looked a bit… melancholy, but it held high hopes for its future.
 
-<img src="https://github.com/al-sapsan/AlphaBot/blob/main/docs/figures/Alpha_v2.png" alt="Can connect GPIO" style="width: 100%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/blob/main/docs/figures/Alpha_v2.png" alt="Alpha_v2" style="width: 100%; height: auto;">
 
 ### **Figure 7.** AlphaBot2‑Pi after mechanical revision: extended standoffs + HC‑SR04.
 > Standoff lengthening (indicated by red arrows) corrected the issue; the additional space was leveraged to add an ultrasonic distance sensor.
