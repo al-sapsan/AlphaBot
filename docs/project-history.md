@@ -94,7 +94,7 @@ It then became clear that the design needed to be modified: I had to lengthen th
 
 After all these adjustments, the AlphaBot looked a bit… melancholy, but it held high hopes for its future.
 
-<img src="https://github.com/al-sapsan/AlphaBot/blob/main/docs/figures/Alpha_v2.png" alt="Alpha_v2" style="width: 100%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/blob/main/docs/figures/Alpha_v2.png" alt="Can connect GPIO" style="width: 100%; height: auto;">
 
 ### **Figure 7.** AlphaBot2‑Pi after mechanical revision: extended standoffs + HC‑SR04.
 > Standoff lengthening (indicated by red arrows) corrected the issue; the additional space was leveraged to add an ultrasonic distance sensor.
@@ -110,7 +110,7 @@ After all these adjustments, the AlphaBot looked a bit… melancholy, but it hel
 
 ## Step 3.1 — Testing
 
-Well, finally, the time for testing has come [see here](docs/boards-assembly.md). After running all the tests and seeing that the system was fully functional, I hit a pretty significant problem for me: I could only test for 20–25 minutes at most. Even with the mildest, unloaded testing, the charge of the two 14500 batteries would catastrophically run out.
+Well, finally, the time for testing has come [see here](AlphaBot/docs/boards-assembly.md). After running all the tests and seeing that the system was fully functional, I hit a pretty significant problem for me: I could only test for 20–25 minutes at most. Even with the mildest, unloaded testing, the charge of the two 14500 batteries would catastrophically run out.
 
 The reason was that the AlphaBot2‑Pi board was originally designed by the manufacturer to be used with the third or, at most, fourth model of Raspberry Pi — which are much more energy‑efficient than the fifth model. And this is even considering the fact that only the single‑board computer was being tested, while the chassis remained motionless and practically unloaded on the test bench. If you were to make this contraption actually move — i.e., do what it’s actually meant to do — the battery would last a maximum of 10 minutes. As they say in Russia: «Such hockey we don’t need!»
 
