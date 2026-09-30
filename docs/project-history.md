@@ -136,7 +136,7 @@ flowchart TD
 
 But problems arose here too. On the 40‑pin connector of the Raspberry Pi (RPi11 on AlphaBot2‑Pi), **pins 2 and 4** are **+5V lines**. In the standard AlphaBot2‑Pi circuit, they were used to **supply power to the RPi** from the LM2596 (via the FC‑20P ribbon cable from the lower board) [see Waveshare's scheme for details](https://github.com/al-sapsan/AlphaBot/blob/main/docs/datasheets/AlphaBot2-Base-Schematic.pdf).
 
-<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/pins_to_remove.png" alt="Pins to remove" style="width: 100%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/pins_to_remove.png" alt="Pins to remove" style="width: 75%; height: auto;">
 
 #### Figure 3.1. Pins 2 and 4 used to **supply power to RPi**.
 > The blue-red crosses mark pins 2 and 4 that will need to be removed. Why? Read on 👇
@@ -195,7 +195,7 @@ Disconnect (remove) pins 2 and 4 to prevent reverse current damage to the RPi 
 **Physically:** pins 2 and 4 were removed by literally yanking them out 😀 from the RPi11 connector (40‑pin GPIO).
 **Result:** the RPi 5 no longer receives power from the LM2596 via GPIO. Power comes only via USB‑C from the XH‑M404.
 
-<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/after_removing.png" alt="dental surgery" style="width: 100%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/after_removing.png" alt="dental surgery" style="width: 75%; height: auto;">
 
 #### Figure 3.2. GPIO extender after dental surgery.
 > The blue-red arrows indicate the sites of dental surgical procedures to remove pins 2 and 4 🦷
@@ -206,7 +206,7 @@ Disconnect (remove) pins 2 and 4 to prevent reverse current damage to the RPi 
 
 I’ve made the decision — I’m going to do it. Done.
 
-<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/chip_in_vice.jpeg" alt="Pins to remove" style="width: 100%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/chip_in_vice.jpeg" alt="Pins to remove" style="width: 75%; height: auto;">
 
 #### Figure 3.3. Soldered TX60F to ZTE UBEC.
 > The corresponding interface connectors were soldered to the voltage converter — now I’ve got to test this whole mess.
@@ -215,7 +215,7 @@ I’ve made the decision — I’m going to do it. Done.
 
 And as usual, testing was carried out afterwards.
 
-<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/UBEC_current.jpeg" alt="UBEC_current" style="width: 100%; height: auto;">
+<img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/UBEC_current.jpeg" alt="UBEC_current" style="width: 75%; height: auto;">
 
 
 #### Figure 3.4. Output voltage readings from ZTE UBEC.
