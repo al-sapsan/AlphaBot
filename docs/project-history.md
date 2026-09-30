@@ -62,7 +62,7 @@ But of course, no good deed goes unpunished 😅. Here’s the catch: the case i
 
 <img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/Cannot_connectGPIO.png" alt="Cannot connect GPIO" style="width: 75%; height: auto;">
 
-### **Figure 4.** GPIO alignment problem
+#### **Figure 2.2** GPIO alignment problem
 > The Raspberry Pi 5 case is too thick to let the pins connect cleanly to the AlphaBot2‑Pi board.
 > As you can see, the case frame presses against the nearby components on the AlphaBot board, so the GPIO pins can’t fully seat into their sockets. That’s why we can’t get a proper connection. 🔌❌
 
@@ -72,7 +72,7 @@ I fixed the problem with a straightforward solution: a GPIO pin extender. But, o
 
 <img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/Can_connectGPIO.png" alt="Can connect GPIO" style="width: 75%; height: auto;">
 
-### **Figure 5.** The fix: a GPIO extender solves the alignment problem
+#### **Figure 2.3** The fix: a GPIO extender solves the alignment problem
 >The little piece of polymer and metal did the trick: now the Raspberry Pi 5 connects cleanly to the AlphaBot2‑Pi board, and there’s still enough clearance for proper airflow and cooling. ✅
 
 ---
@@ -83,7 +83,7 @@ I fixed the problem with a straightforward solution: a GPIO pin extender. But, o
 
 <img src="https://github.com/al-sapsan/AlphaBot/raw/main/docs/figures/Cannot_fold_pie.png" alt="Cannot_fold_pie" style="width: 75%; height: auto;">
 
-### **Figure 6.** Increased stack height causing misalignment with standoffs.
+#### **Figure 2.4** Increased stack height causing misalignment with standoffs.
 >The addition of the GPIO header extender and the Raspberry Pi 5 case increased the overall height of the upper assembly. This resulted in a gap between the top plate and the standoffs, preventing proper mechanical alignment.
 
 ---
@@ -96,7 +96,7 @@ After all these adjustments, the AlphaBot looked a bit… melancholy, but it hel
 
 <img src="https://github.com/al-sapsan/AlphaBot/blob/main/docs/figures/Alpha_v2.png" alt="Can connect GPIO" style="width: 100%; height: auto;">
 
-### **Figure 7.** AlphaBot2‑Pi after mechanical revision: extended standoffs + HC‑SR04.
+#### **Figure 2.5** AlphaBot2‑Pi after mechanical revision: extended standoffs + HC‑SR04.
 > Standoff lengthening (indicated by red arrows) corrected the issue; the additional space was leveraged to add an ultrasonic distance sensor.
 
 ---
